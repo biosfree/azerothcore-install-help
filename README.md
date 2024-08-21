@@ -45,12 +45,16 @@ wget -P /tmp https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
 ```
 
 Установите загруженный dep-пакет:
+
 ```bash
 sudo apt update
 sudo apt install /tmp/mysql-apt-config_0.8.32-1_all.deb
 sudo apt update
 sudo apt install mysql-server
 ```
+
+>[!NOTE]
+>При установке MySQL, новая учетная запись `root` уже защищенная аутентификацией через `auth_socket`, поэтому вы можете спокойно оставить поле с паролем для root пустым!
 
 >[!TIP]
 >*Или воспользутесь вариантом установки из официальной [инструкции](https://dev.mysql.com/doc/refman/8.4/en/linux-installation-apt-repo.html)*:
@@ -74,10 +78,13 @@ sudo apt update && sudo apt install git cmake make gcc g++ clang default-libmysq
 >[!TIP]
 >Так же, для использования скрипта `acore.sh`, могут пригодится дополнительные утилиты (такие как: `unzip` , `curl`),
 >которые можно установить выборочно...
+>
 >```bash
 >sudo apt update && sudo apt install unzip curl -y
 >```
+>
 >:exclamation: или воспользоваться самим скриптом `acore.sh` и установить сразу все зависимости:
+>
 >```bash
 >~/azerothcore/acore.sh install-deps
 >```
@@ -87,7 +94,7 @@ sudo apt update && sudo apt install git cmake make gcc g++ clang default-libmysq
 ### Загрузка исходников AzerothCore [:point_left:](#подготовка-azerothcore-point_up_2)
 
 Загрузите исходники c [официального репозитория](https://github.com/azerothcore/azerothcore-wotlk)
->`sudo apt update && sudo apt install git -y`
+
 ```bash
 git -C ~ clone https://github.com/azerothcore/azerothcore-wotlk.git --branch master --single-branch azerothcore --depth 1
 ```
@@ -114,20 +121,6 @@ sed -i 's/sudo cmake --install . --config $CTYPE/cmake --install . --config $CTY
 sed -i '/find "$AC_BINPATH_FULL" /s/^/#/' ~/azerothcore/apps/compiler/includes/functions.sh
 ```
 
-> [!TIP]
->Или используя патч `functions.sh.patch`
->```bash
->wget -P ~/azerothcore https://raw.githubusercontent.com/biosfree/readme/patch/functions.sh.patch
->cd ~/azerothcore
->patch -p0 -i functions.sh.patch
->```
->>Подсказка для создания патча:
->>```bash
->>cd ~/azerothcore
->>diff -ru modules/$DIR$/ modules/$DIR$-new/ > $NAME$.patch
->>patch -p0 -i $NAME$.patch
->>```
-
 ### Создание чистой базы даных AzerothCore [:point_left:](#подготовка-azerothcore-point_up_2)
 
 - Зайти в консоль MySQL: ```sudo mysql```
@@ -147,7 +140,8 @@ EXIT
 ```
 
 >[!IMPORTANT]  
-> **Настоятельно рекомендуется сразу же изменить пароль на случайно сгенерированный MySQL и сохранить в файл: `~\acore_sql_pass.txt`.**
+> **Настоятельно рекомендуется сразу же изменить пароль на случайный и сохранить в файл: `~\acore_sql_pass.txt`.**
+
 ```bash
 cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'FNR == 4 {print $6}' | tee acore_sql_pass.txt
 ```
@@ -165,10 +159,12 @@ cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'F
 >```bash
 >sudo mysql < ~/azerothcore/data/sql/create/drop_mysql_8.sql
 >```
+>
 >>или удалить вручную через консоль MySQL
 >>```bash
 >>sudo mysql
 >>```
+>>
 >>```sql
 >>REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'acore'@'localhost';
 >>DROP USER 'acore'@'localhost';
@@ -178,42 +174,45 @@ cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'F
 >>EXIT
 >>
 >>```
+>
 
 *Подсказки для управления безопасностью MySQL сервера*:
+
 >[!NOTE]
 >*Зайходим в консоль MySQL сервера под пользователем `root` если при установки не указывали пароль*:
+>
 >```bash
 >sudo mysql
 >```
+>
 >>*Или с паролем если указывали*:
+>>
 >>```bash
 >>sudo mysql -p
 >>```
 >
 >Чтобы посмотреть для всех пользователей в MySQL используемый метод аунтификации
+>
 >```sql
 >SELECT user, host, plugin, Super_priv from mysql.user;
 >```
 >
 >*Чтобы изменит у пользователя метод аунтификации выбираем одну команду из примера*:
+>
 >```sql
 >ALTER USER 'acore'@'localhost' IDENTIFIED WITH auth_socket;
 >ALTER USER 'acore'@'localhost' IDENTIFIED BY 'ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ';
 >ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;
 >ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ';
 >```
+>
 >*Чтобы дать MySQL пользователю `acore` привелегии `root`*:
+>
 >```sql
 >GRANT ALL PRIVILEGES ON * . * TO 'acore'@'localhost' WITH GRANT OPTION;
 >FLUSH PRIVILEGES;
 >EXIT
 >```
->
->```bash
->sudo mysql_secure_installation
->> press [Y]-[N]-[Y]-[Y]-[Y]
->```
->> или `sudo mysql_secure_installation --use-default`
 
 ## Компиляция и настройка Azerothcore [:point_up_2:](#установка--azerothcore-2024-rocket)
 
@@ -233,6 +232,7 @@ make -j $(nproc) install
 
 >[!NOTE]
 >После успешной сборки сервера со всеми утилитами, в конфигурационный файл можно вернуть запрет на сборку дополнительных инструментов.
+>
 >```bash
 >sed -i 's|CTOOLS_BUILD="all"|CTOOLS_BUILD=${CTOOLS_BUILD:-none}|' ~/azerothcore/conf/config.sh
 >```
@@ -242,6 +242,7 @@ make -j $(nproc) install
 ```bash
 for i in $( ls ~/.local/etc/*.dist ); do cp -n $i ${i%.*}; done
 ```
+
 ```bash
 sed -i 's|^DataDir = .*|DataDir = "/mnt/wowclient/wotlk"|' ~/.local/etc/worldserver.conf
 sed -i 's|^RealmZone = .*|RealmZone = 12|' ~/.local/etc/worldserver.conf
@@ -249,22 +250,27 @@ sed -i 's|^DBC.Locale = .*|DBC.Locale = 8|' ~/.local/etc/worldserver.conf
 sed -i 's|^LogsDir = .*|LogsDir = "'${HOME}'/logs"|' ~/.local/etc/*.conf
 sed -i 's|^TempDir = .*|TempDir = "'${HOME}'"|' ~/.local/etc/*.conf
 ```
->**Убедитесь что директория `logs` сушествует и при необходимости создайте её:**
+
+**Убедитесь что директория `logs` сушествует и при необходимости создайте её:**
+
 >```bash
 >mkdir ~/logs
 >```
 
 >[!NOTE]
 >если используем свой пароль для MySQL пользователя `acore`
->```
->sed -i 's/= "127.0.0.1;3306;acore;acore;/= "127.0.0.1;3306;acore;ACORESQLPASS;/' ~/.local/etc/*.conf
+>
+>```bash
+>sed -i 's/= "127.0.0.1;3306;acore;acore;/= "127.0.0.1;3306;acore;'ACORESQLPASS';/' ~/.local/etc/*.conf
 >```
 
 >[!TIP]
 >*Для более тонкой настройки вашего сервера отредактируйте конфигурационные файлы в текстовом редакторе*
+>
 >```bash
 >nano ~/.local/etc/authserver.conf
 >```
+>
 >```bash
 >nano ~/.local/etc/worldserver.conf
 >```
@@ -364,14 +370,17 @@ sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 
 ```
 >[!NOTE]
 >Для вступления изминений текста приветсвия в силу нужно в консоли worldserver перезагрузить `motd`
+>
 >```lua
 >reload motd
 >```
+>
 >>Там же можно было и создать новое приветсвие но случаються проблемы с вводимыми символами
 >>```lua
 >>server set motd 'Добро пожаловать на World of Warcraft сервер "Шторм"'
 >>reload motd
 >>```
+>
 
 ## Установка дополнений для AzerothCore [:point_up_2:](#установка--azerothcore-2024-rocket)
 
@@ -382,6 +391,7 @@ sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 
 [![Eluna](https://raw.githubusercontent.com/azerothcore/mod-eluna/master/icon.png)](https://github.com/ElunaLuaEngine/Eluna)
 
 *Eluna Lua Engine © is a lua engine embedded to World of Warcraft emulators. Eluna supports MaNGOS, CMaNGOS, TrinityCore and AzerothCore. We are currently working hard to make Eluna better from inside and outside.*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
@@ -391,6 +401,7 @@ sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_sc
 
 **2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot)**
 *An auction house bot for the best core: AzerothCore.*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
@@ -399,6 +410,7 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 **3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area)**
 *Skips the Death Knight starting zone.*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
 sed -i 's/Skip.Deathknight.Starter.Enable = 1/Skip.Deathknight.Starter.Enable = 0/' ~/azerothcore/modules/mod-skip-dk-starting-area/conf/skip_dk_module.conf.dist
@@ -409,6 +421,7 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 **4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)**
 *Allows for players to use dungeon finder solo or in groups less than and up to 5 players.*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
@@ -417,6 +430,7 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 **5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)**
 *Корректирует статы игроков в рейдах в зависимости от количества игроков в группе*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
@@ -426,13 +440,16 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 **6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)**
 
 *Этот модуль добавляет банкира реагентов, аналогичного более поздним расширениям WoW. Этот банкир может освободить место в сумке, храня реагенты для крафта для игроков. Версия для всех персонажей на аккаунте.*
+
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
+
 *Чтобы добавить reagent-bank-account NPC:*
 >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+>
 >```lua
 >.npc add 290011
 >```
@@ -440,13 +457,16 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 **7. [mod-racial-trait-swap.git:](https://github.com/biosfree/mod-racial-trait-swap)**
 
 *Racial-Trait NPC, that allows you, for a ingame cost of gold (configurable), to trade out your racial traits for another.*
+
 ```bash
 git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
+
 *Чтобы добавить racial-trait-swap NPC:*
 >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+>
 >```lua
 >.npc add 98888
 >```
@@ -465,30 +485,39 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 >azerothcore/acore.sh mi mod-guildfunds
 >azerothcore/acore.sh compiler build
 >```
+>
 >```bash
 >azerothcore/acore.sh mi mod-npc-beastmaster
 >azerothcore/acore.sh compiler build
 >```
+>
 >*Чтобы добавить beastmaster NPC:*
 >>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+>>
 >>```lua
 >>.npc add 601026
 >>```
+>
 >```bash
 >azerothcore/acore.sh mi mod-profspecs
 >azerothcore/acore.sh compiler build
 >```
+>
 >*Чтобы добавить profspecs NPC:*
 >>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+>>
 >>```lua
 >>.npc add 197761
 >>```
+>
 >```bash
 >azerothcore/acore.sh mi mod-transmog
 >azerothcore/acore.sh compiler build
 >```
+>
 >*Чтобы добавить transmog NPC:*
 >>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+>>
 >>```lua
 >>.npc add 190010
 >>```
@@ -526,38 +555,48 @@ for i in $( ls ~/.local/etc/modules/*.dist ); do cp -n $i ${i%.*}; done
 ```bash
 worldserver
 ```
+
 >[!TIP]
 >*или используя `acore.sh`:*
+>
 >```bash
 >~/azerothcore/acore.sh rw
 >```
 
 В консоле `worldserver` создаем нового пользователя с правами `GM` level 3
 ```lua
-account create admin ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ
+account create admin 'ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ'
 account set gmlevel admin 3 -1
 ```
+
 В консоле `worldserver` создаем нового пользователя для персонажа используемого аукционным ботом
 ```lua
-account create ahbot ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ
+account create ahbot 'ВАШ-ДЛИННЫЙ-И-СЛОЖНЫЙ-ПАРОЛЬ'
 ```
+
 В консоле `worldserver` создаем нового пользователя для игровых персонажей
 ```lua
 account create 'ИМЯ-АКАУНТА' 'ПАРОЛЬ'
 ```
+
 Зауск сервера авторизации
 ```bash
 authserver
 ```
+
 >[!TIP]
 >*или используя `acore.sh`:*
->```~/azerothcore/acore.sh ra```
+>
+>```bash
+>~/azerothcore/acore.sh ra
+>```
 
 ## Настрока запуска сервера как службы [:point_up_2:](#установка--azerothcore-2024-rocket)
 
 ```bash
 sudo nano /etc/systemd/system/auth.service
 ```
+
 ```ini
 [Unit]
 Description=AzerothCore Authserver
@@ -581,6 +620,7 @@ WantedBy=multi-user.target
 ```bash
 sudo nano /etc/systemd/system/world.service
 ```
+
 ```ini
 [Unit]
 Description=AzerothCore Worldserver
