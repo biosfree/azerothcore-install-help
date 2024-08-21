@@ -147,7 +147,7 @@ EXIT
 ```
 
 >[!IMPORTANT]  
-> **Настоятельно рекомендуется сразуже изменить пароль на случайный и сохранить в файл `~\acore_sql_pass.txt`.**
+> **Настоятельно рекомендуется сразу же изменить пароль на случайно сгенерированный MySQL и сохранить в файл: `~\acore_sql_pass.txt`.**
 ```bash
 cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'FNR == 4 {print $6}' | tee acore_sql_pass.txt
 ```
