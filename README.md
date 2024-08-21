@@ -390,7 +390,7 @@ sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 
 
 [![Eluna](https://raw.githubusercontent.com/azerothcore/mod-eluna/master/icon.png)](https://github.com/ElunaLuaEngine/Eluna)
 
-*Eluna Lua Engine © is a lua engine embedded to World of Warcraft emulators. Eluna supports MaNGOS, CMaNGOS, TrinityCore and AzerothCore. We are currently working hard to make Eluna better from inside and outside.*
+*Eluna Lua Engine © is a lua engine embedded to World of Warcraft emulators.*
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
