@@ -655,7 +655,7 @@ sudo systemctl start world auth
 
 Проверка обновлений ядра AzerothCore:
 ```bash
-git -C $HOME/azerothcore pull
+git -C $HOME/azerothcore pull origin master
 ```
 
 Установка обновлений ядра AzerothCore:
