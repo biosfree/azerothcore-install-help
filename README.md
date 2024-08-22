@@ -34,6 +34,7 @@ date : 2024-08-21 17:00
 
 7. [Первый запуск сервера](#первый-запуск-сервера-point_up_2)
 8. [Настрока запуска сервера как службы](#настрока-запуска-сервера-как-службы-point_up_2)
+9. [Поддержка сервера в актуальном состояние](#поддержка-сервера-в-актуальном-состояние-point_up_2)
 
 ## Подготовка OS Debian 12 [:point_up_2:](#установка--azerothcore-2024-rocket)
 
@@ -649,3 +650,28 @@ sudo systemctl daemon-reload
 sudo systemctl enable auth world
 sudo systemctl start world auth
 ```
+
+### Поддержка сервера в актуальном состояние [:point_up_2:](#установка--azerothcore-2024-rocket)
+
+Проверка обновлений ядра AzerothCore:
+```bash
+git -C $HOME/azerothcore pull
+```
+
+Установка обновлений ядра AzerothCore:
+```bash
+cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+make -C $HOME/azerothcore/build/ -j $(nproc) install
+```
+
+Проверка обновлений модулей AzerothCore:
+```bash
+cd ~ && find ./azerothcore/modules -mindepth 1 -maxdepth 1 -type d -exec git --git-dir={}/.git --work-tree=$PWD/{} pull origin master \;
+```
+
+Установка обновлений модулей AzerothCore:
+```bash
+cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+make -C $HOME/azerothcore/build/ -j $(nproc) install
+```
+
