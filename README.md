@@ -414,11 +414,17 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
-sed -i 's/Skip.Deathknight.Starter.Enable = 1/Skip.Deathknight.Starter.Enable = 0/' ~/azerothcore/modules/mod-skip-dk-starting-area/conf/skip_dk_module.conf.dist
-sed -i 's/if (player->getLevel() <= DKL)/if (player->GetLevel() <= DKL)/' ~/azerothcore/modules/mod-skip-dk-starting-area/src/SkipDK.cpp
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
+
+>[!NOTE]
+>
+>```bash
+>sed -i 's/if (player->getLevel() <= DKL)/if (player->GetLevel() <= DKL)/' ~/azerothcore/modules/mod-skip-dk-starting-area/src/SkipDK.cpp
+>```
+>
+
 
 **4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)**
 *Allows for players to use dungeon finder solo or in groups less than and up to 5 players.*
