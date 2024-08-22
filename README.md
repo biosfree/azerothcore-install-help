@@ -395,6 +395,9 @@ sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_scripts"|' ~/.local/etc/modules/mod_LuaEngine.conf.dist
@@ -405,6 +408,9 @@ sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_sc
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
@@ -414,6 +420,9 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
@@ -423,7 +432,7 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 >```bash
 >sed -i 's/if (player->getLevel() <= DKL)/if (player->GetLevel() <= DKL)/' ~/azerothcore/modules/mod-skip-dk-starting-area/src/SkipDK.cpp
 >```
->
+
 
 
 **4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)**
@@ -431,6 +440,9 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
@@ -440,6 +452,9 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
@@ -450,6 +465,9 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
@@ -467,6 +485,9 @@ make -C $HOME/azerothcore/build/ -j $(nproc) install
 
 ```bash
 git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
+```
+
+```bash
 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
 make -C $HOME/azerothcore/build/ -j $(nproc) install
 ```
