@@ -140,8 +140,8 @@ EXIT
 
 ```
 
->[!IMPORTANT]  
-> **Настоятельно рекомендуется сразу же изменить пароль на случайный и сохранить в файл: `~\acore_sql_pass.txt`.**
+>[!IMPORTANT]
+>**Настоятельно рекомендуется сразу же изменить пароль на случайный и сохранить в файл: `~\acore_sql_pass.txt`.**
 
 ```bash
 cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'FNR == 4 {print $6}' | tee acore_sql_pass.txt
@@ -222,7 +222,10 @@ cd ~ && sudo mysql -e 'SET PASSWORD FOR 'acore'@'localhost' TO RANDOM;' | awk 'F
 ```bash
 mkdir ~/azerothcore/build
 cd ~/azerothcore/build
-cmake ../ -DCMAKE_INSTALL_PREFIX=$HOME/.local/ -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS_BUILD=all -DSCRIPTS=static -DMODULES=static
+```
+
+```cmake
+cmake ../ -DCMAKE_INSTALL_PREFIX=$HOME/.local/ -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DWITH_WARNINGS=1 -DTOOLS_BUILD=all
 make -j $(nproc) install
 ```
 
