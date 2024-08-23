@@ -375,18 +375,11 @@ sudo mysql acore_auth -e "UPDATE realmlist SET name = 'Шторм', address = '1
 sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 'Добро пожаловать на World of Warcraft сервер \"Шторм\"')"
 ```
 >[!NOTE]
->Для вступления изминений текста приветсвия в силу нужно в консоли worldserver перезагрузить `motd`
->
+>Там же текста приветсвия можно изменить в консоли `worldserver`, но случаються проблемы с вводимыми символами
 >```lua
+>server set motd 'Добро пожаловать на World of Warcraft сервер "Шторм"'
 >reload motd
 >```
->
->>Там же можно было и создать новое приветсвие но случаються проблемы с вводимыми символами
->>```lua
->>server set motd 'Добро пожаловать на World of Warcraft сервер "Шторм"'
->>reload motd
->>```
->
 
 ## Установка дополнений для AzerothCore [:point_up_2:](#установка--azerothcore-2024-rocket)
 
