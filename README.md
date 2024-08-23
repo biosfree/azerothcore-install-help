@@ -255,17 +255,22 @@ sed -i 's|^LogsDir = .*|LogsDir = "'${HOME}'/logs"|' ~/.local/etc/*.conf
 sed -i 's|^TempDir = .*|TempDir = "'${HOME}'"|' ~/.local/etc/*.conf
 ```
 
+>[!IMPORTANT]
+>**:exclamation: если используем свой пароль для MySQL пользователя `acore`**
+>
+>```bash
+>cat ~/acore_sql_pass.txt
+>```
+>:exclamation:Замените `ACORESQLPASS` на ваш пароль MySQL пользователя `acore`
+
+```bash
+sed -i 's/= "127.0.0.1;3306;acore;acore;/= "127.0.0.1;3306;acore;ACORESQLPASS;/' ~/.local/etc/*.conf
+```
+
 **Убедитесь что директория `logs` сушествует и при необходимости создайте её:**
 
 >```bash
 >mkdir ~/logs
->```
-
->[!NOTE]
->если используем свой пароль для MySQL пользователя `acore`
->
->```bash
->sed -i 's/= "127.0.0.1;3306;acore;acore;/= "127.0.0.1;3306;acore;'ACORESQLPASS';/' ~/.local/etc/*.conf
 >```
 
 >[!TIP]
