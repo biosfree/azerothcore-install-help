@@ -256,12 +256,9 @@ sed -i 's|^TempDir = .*|TempDir = "'${HOME}'"|' ~/.local/etc/*.conf
 ```
 
 >[!IMPORTANT]
->**:exclamation: если используем свой пароль для MySQL пользователя `acore`**
->
->```bash
->cat ~/acore_sql_pass.txt
->```
->:exclamation:Замените `ACORESQLPASS` на ваш пароль MySQL пользователя `acore`
+>**если используем свой пароль для MySQL пользователя `acore`:**
+
+:exclamation: *Замените `ACORESQLPASS` на ваш пароль. Чтобы посмотреть сгенерированный пароль запустите: `cat ~/acore_sql_pass.txt`*
 
 ```bash
 sed -i 's/= "127.0.0.1;3306;acore;acore;/= "127.0.0.1;3306;acore;ACORESQLPASS;/' ~/.local/etc/*.conf
