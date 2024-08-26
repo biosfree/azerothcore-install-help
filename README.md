@@ -535,6 +535,13 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
+      
+   *Чтобы добавить reagent-bank-account NPC:*
+   >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+   >
+   >```lua
+   >.npc add 190010
+   >```
 
 #### Установка допольнительных модулей при помощи `acore.sh` [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
