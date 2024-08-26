@@ -357,10 +357,13 @@ mmaps_generator
 >Хотя при первом запуске сервер сам запустит автозаполнение базы данных AzerothCore нам удобнее сделать это заранее, чтобы сразу заполнить IP адрес и стартовое приветствие сервера.
 
 Для заполнение базы данный воспользуемся утилитой `dbimport`
+
 ```bash
 dbimport
 ```
+
 >может понадобиться проверка `dbimport.conf` на настроки подключения к базе данных
+>
 >```bash
 >cp ~/.local/etc/dbimport.conf.dist ~/.local/etc/dbimport.conf
 >nano ~/.local/etc/dbimport.conf
@@ -370,10 +373,12 @@ dbimport
 ```sql
 sudo mysql acore_auth -e "UPDATE realmlist SET name = 'Шторм клинков', address = '192.168.10.101' WHERE id = '1'";
 ```
+
 *Настройка приветсвия для сервера*:
 ```sql
-sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 'Добро пожаловать на World of Warcraft сервер \"Шторм клинков\"')"
+sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (realmid, text) VALUES ('1', 'Добро пожаловать на World of Warcraft сервер \"Шторм клинков\"')"
 ```
+
 >[!NOTE]
 >Там же текста приветсвия можно изменить в консоли `worldserver`, но случаються проблемы с вводимыми символами
 >```lua
