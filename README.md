@@ -368,16 +368,16 @@ dbimport
 
 *Настройка ip адреса сервера*:
 ```sql
-sudo mysql acore_auth -e "UPDATE realmlist SET name = 'Шторм', address = '192.168.10.101' WHERE id = '1'";
+sudo mysql acore_auth -e "UPDATE realmlist SET name = 'Шторм клинков', address = '192.168.10.101' WHERE id = '1'";
 ```
 *Настройка приветсвия для сервера*:
 ```sql
-sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 'Добро пожаловать на World of Warcraft сервер \"Шторм\"')"
+sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 'Добро пожаловать на World of Warcraft сервер \"Шторм клинков\"')"
 ```
 >[!NOTE]
 >Там же текста приветсвия можно изменить в консоли `worldserver`, но случаються проблемы с вводимыми символами
 >```lua
->server set motd 'Добро пожаловать на World of Warcraft сервер "Шторм"'
+>server set motd 'Добро пожаловать на World of Warcraft сервер "Шторм клинков"'
 >reload motd
 >```
 
