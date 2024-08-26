@@ -400,10 +400,6 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
-   
-   ```bash
-   sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_scripts"|' ~/.local/etc/modules/mod_LuaEngine.conf.dist
-   ```
 
 2. [mod-auctionator:](https://github.com/araxiaonline/mod-auctionator)
    *Этот мод предназначен для поддержания здорового аукционного дома на малопосещаемом сервере.*
@@ -621,6 +617,10 @@ wget -O ~/azerothcore/data/sql/custom/db_world/mod-rare-drops.sql https://raw.gi
 Создание файлов настроек для модулей
 ```bash
 for i in $( ls ~/.local/etc/modules/*.dist ); do cp -n $i ${i%.*}; done
+```
+Настройка mod_LuaEngine
+```bash
+sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_scripts"|' ~/.local/etc/modules/mod_LuaEngine.conf
 ```
 
 Первый запуск сервера для внисения обновлений и правок
