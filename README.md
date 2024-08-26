@@ -385,117 +385,151 @@ sudo mysql acore_auth -e "INSERT INTO motd (\`realmid\`, \`text\`) VALUES ('1', 
 
 ### Установка допольнительных модулей [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
-**1. mod-eluna:** [Git repository](https://github.com/azerothcore/mod-eluna) | [Eluna API (AC version)](https://www.azerothcore.org/pages/eluna/index.html) | [Lua reference manual](http://www.lua.org/manual/5.2/).
+1. [mod-eluna:](https://github.com/azerothcore/mod-eluna)
+   *Eluna Lua Engine © is a lua engine embedded to World of Warcraft emulators.* [Eluna API (AC version)](https://www.azerothcore.org/pages/eluna/index.html) | [Lua reference manual](http://www.lua.org/manual/5.2/).
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
+   ```
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
+   
+   ```bash
+   sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_scripts"|' ~/.local/etc/modules/mod_LuaEngine.conf.dist
+   ```
 
-[![Eluna](https://raw.githubusercontent.com/azerothcore/mod-eluna/master/icon.png)](https://github.com/ElunaLuaEngine/Eluna)
+2. [mod-auctionator:](https://github.com/araxiaonline/mod-auctionator)
+   *Этот мод предназначен для поддержания здорового аукционного дома на малопосещаемом сервере.*
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/araxiaonline/mod-auctionator.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
 
-*Eluna Lua Engine © is a lua engine embedded to World of Warcraft emulators.*
+<!--
+2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot)
+   *An auction house bot.*
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
+-->
 
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
-```
+3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area)
+	 *Skips the Death Knight starting zone.*
+	 
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
+   ```
+	 
+	 ```bash
+	 cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+	 make -C $HOME/azerothcore/build/ -j $(nproc) install
+	 ```
 
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-sed -i 's|^Eluna.ScriptPath = .*|Eluna.ScriptPath = "'${HOME}'/.local/bin/lua_scripts"|' ~/.local/etc/modules/mod_LuaEngine.conf.dist
-```
+   >```bash
+   >sed -i 's/if (player->getLevel() <= DKL)/if (player->GetLevel() <= DKL)/' ~/azerothcore/modules/mod-skip-dk-starting-area/src/SkipDK.cpp
+   >```
 
-**2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot)**
-*An auction house bot for the best core: AzerothCore.*
+4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)
+   *Allows for players to use dungeon finder solo or in groups less than and up to 5 players.*
 
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot
-```
+	 ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
 
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
+5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)
+   *Корректирует статы игроков в рейдах в зависимости от количества игроков в группе*
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
 
-**3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area)**
-*Skips the Death Knight starting zone.*
+6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)
 
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
-```
+   *Этот модуль добавляет банкира реагентов, аналогичного более поздним расширениям WoW. Этот банкир может освободить место в сумке, храня реагенты для крафта для игроков. Версия для всех персонажей на аккаунте.*
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
+   
+   *Чтобы добавить reagent-bank-account NPC:*
+   >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+   >
+   >```lua
+   >.npc add 290011
+   >```
 
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
+<!--
+7. [mod-racial-trait-swap.git:](https://github.com/biosfree/mod-racial-trait-swap)
+   *Racial-Trait NPC, that allows you, for a ingame cost of gold (configurable), to trade out your racial traits for another.*
+   
+   ```bash
+   git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
+   
+   *Чтобы добавить racial-trait-swap NPC:*
+   >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
+   >
+   >```lua
+   >.npc add 98888
+   >```
+-->
 
->[!NOTE]
->
->```bash
->sed -i 's/if (player->getLevel() <= DKL)/if (player->GetLevel() <= DKL)/' ~/azerothcore/modules/mod-skip-dk-starting-area/src/SkipDK.cpp
->```
+7. [mod-gain-honor-guard:](https://github.com/azerothcore/mod-gain-honor-guard)
+   *Этот модуль дает игрокам возможность фармить стражников и/или элиту для получения чести.*
+   
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-gain-honor-guard.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
 
-
-
-**4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)**
-*Allows for players to use dungeon finder solo or in groups less than and up to 5 players.*
-
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
-```
-
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
-
-**5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)**
-*Корректирует статы игроков в рейдах в зависимости от количества игроков в группе*
-
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
-```
-
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
-
-**6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)**
-
-*Этот модуль добавляет банкира реагентов, аналогичного более поздним расширениям WoW. Этот банкир может освободить место в сумке, храня реагенты для крафта для игроков. Версия для всех персонажей на аккаунте.*
-
-```bash
-git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
-```
-
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
-
-*Чтобы добавить reagent-bank-account NPC:*
->С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
->
->```lua
->.npc add 290011
->```
-
-**7. [mod-racial-trait-swap.git:](https://github.com/biosfree/mod-racial-trait-swap)**
-
-*Racial-Trait NPC, that allows you, for a ingame cost of gold (configurable), to trade out your racial traits for another.*
-
-```bash
-git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
-```
-
-```bash
-cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-make -C $HOME/azerothcore/build/ -j $(nproc) install
-```
-
-*Чтобы добавить racial-trait-swap NPC:*
->С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
->
->```lua
->.npc add 98888
->```
+8. [mod-transmog:](https://github.com/azerothcore/mod-transmog)
+   *Это модуль добавляет в игру возможность трансмогрификации на основе кода: [Rochet2 Transmog Script](http://rochet2.github.io/Transmogrification.html)*
+      
+   ```bash
+   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-transmog.git
+   ```
+   
+   ```bash
+   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
+   make -C $HOME/azerothcore/build/ -j $(nproc) install
+   ```
 
 #### Установка допольнительных модулей при помощи `acore.sh` [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
