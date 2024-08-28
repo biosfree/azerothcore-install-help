@@ -395,10 +395,12 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 ### Установка допольнительных модулей [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
 1. [mod-eluna:](https://github.com/azerothcore/mod-eluna)
-   Eluna Lua Engine © - *это движок lua, встроенный в World of Warcraft.* | [Eluna API](https://www.azerothcore.org/pages/eluna/index.html) | [Lua manual](http://www.lua.org/manual/5.2/).
-	 ```bash
+   Eluna Lua Engine © - *это движок lua, встроенный в World of Warcraft.*
+
+   ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -406,9 +408,11 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 2. [mod-auctionator:](https://github.com/biosfree/mod-auctionator) -
    *Наполняет аукционный дом на малопосещаемом сервере.*
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-auctionator.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -416,9 +420,11 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area) -
    *Добовляет возможность пропустить стартовую зону Рыцарей смерти.*
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -426,9 +432,11 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg) -
    *Позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -436,9 +444,11 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft) -
    *Увеличивает статы игроков в подземелье в зависимости от количества игроков в группе*
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -446,13 +456,16 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account) -
    *Добавляет банкира реагентов который освобождает место в сумках игрока, храня реагенты для крафта у себя. Версия общего банка реагентов для всех персонажей на акаунте.*
+
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
+   
    *Чтобы добавить reagent-bank-account NPC:*
    >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
    >```lua
@@ -461,9 +474,11 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 7. [mod-gain-honor-guard:](https://github.com/azerothcore/mod-gain-honor-guard) -
    *Дает игрокам возможность фармить стражников и/или элиту для получения чести.*
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-gain-honor-guard.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
@@ -471,69 +486,37 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 8. [mod-transmog:](https://github.com/azerothcore/mod-transmog) -
    *Добавляет в игру возможность трансмогрификации на основе кода:* [Rochet2 Transmog Script](http://rochet2.github.io/Transmogrification.html)
+   
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-transmog.git
    ```
+   
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
+   
    *Чтобы добавить transmog NPC:*
    >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
    >```lua
    >.npc add 190010
    >```
 
-#### Установка допольнительных модулей при помощи `acore.sh` [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
+**Установка допольнительных модулей при помощи `acore.sh` [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)**
 
 >[!TIP]
 >Так же модули можно устанавливать используюя `acore.sh` c префиксом `mi` (*module-install*) и `НАЗВАНИЕ МОДА`
->>*Название берём из [каталога AzerothCore](https://www.azerothcore.org/catalogue.html#/home)*
->
->*Например:*
->```bash
->azerothcore/acore.sh mi mod-eluna
->azerothcore/acore.sh mi mod-reagent-bank
->azerothcore/acore.sh mi mod-gain-honor-guard
->azerothcore/acore.sh mi mod-guildfunds
->azerothcore/acore.sh compiler build
->```
->
->```bash
->azerothcore/acore.sh mi mod-npc-beastmaster
->azerothcore/acore.sh compiler build
->```
->
->*Чтобы добавить beastmaster NPC:*
->>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
->>
->>```lua
->>.npc add 601026
->>```
->
->```bash
->azerothcore/acore.sh mi mod-profspecs
->azerothcore/acore.sh compiler build
->```
->
->*Чтобы добавить profspecs NPC:*
->>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
->>
->>```lua
->>.npc add 197761
->>```
->
->```bash
->azerothcore/acore.sh mi mod-transmog
->azerothcore/acore.sh compiler build
->```
->
->*Чтобы добавить transmog NPC:*
->>С учетной записью gm зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
->>
->>```lua
->>.npc add 190010
->>```
+>Название берём из [каталога AzerothCore](https://www.azerothcore.org/catalogue.html#/home)
+
+*Например:*
+```bash
+azerothcore/acore.sh mi mod-eluna
+azerothcore/acore.sh mi mod-reagent-bank
+azerothcore/acore.sh mi mod-gain-honor-guard
+azerothcore/acore.sh mi mod-guildfunds
+azerothcore/acore.sh mi mod-transmog
+azerothcore/acore.sh compiler build
+```
 
 ### Установка дополнительных скриптов [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
