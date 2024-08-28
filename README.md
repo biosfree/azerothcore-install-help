@@ -406,7 +406,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 2. [mod-auctionator:](https://github.com/araxiaonline/mod-auctionator)
-   *Этот мод предназначен для поддержания здорового аукционного дома на малопосещаемом сервере.*
+   *Мод для наполнения аукционного дома на малопосещаемом сервере.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/araxiaonline/mod-auctionator.git
@@ -419,7 +419,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 <!--
 2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot)
-   *An auction house bot.*
+   *Бот для аукционного дома.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot.git
@@ -432,7 +432,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 -->
 
 3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area)
-	 *Skips the Death Knight starting zone.*
+	 *Пропускаем стартовую зону Рыцарей смерти.*
 	 
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
@@ -448,7 +448,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    >```
 
 4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)
-   *Allows for players to use dungeon finder solo or in groups less than and up to 5 players.*
+   *Позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
 
 	 ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
@@ -460,7 +460,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)
-   *Корректирует статы игроков в рейдах в зависимости от количества игроков в группе*
+   *Корректирует статы игроков в подземельях в зависимости от количества игроков в группе*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
@@ -536,7 +536,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
       
-   *Чтобы добавить reagent-bank-account NPC:*
+   *Чтобы добавить transmog NPC:*
    >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
    >
    >```lua
