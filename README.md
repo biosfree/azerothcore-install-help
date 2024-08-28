@@ -395,7 +395,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 ### Установка допольнительных модулей [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
 1. [mod-eluna:](https://github.com/azerothcore/mod-eluna)
-   *Eluna Lua Engine © - это движок lua, встроенный в World of Warcraft.* [Eluna API](https://www.azerothcore.org/pages/eluna/index.html) | [Lua руководство](http://www.lua.org/manual/5.2/).
+   - *Eluna Lua Engine © - это движок lua, встроенный в World of Warcraft.* [Eluna API](https://www.azerothcore.org/pages/eluna/index.html) | [Lua manual](http://www.lua.org/manual/5.2/).
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
@@ -406,7 +406,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 2. [mod-auctionator:](https://github.com/araxiaonline/mod-auctionator)
-   *Мод для наполнения аукционного дома на малопосещаемом сервере.*
+   - *Мод для наполнения аукционного дома на малопосещаемом сервере.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/araxiaonline/mod-auctionator.git
@@ -419,7 +419,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 <!--
 2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot)
-   *Бот для аукционного дома.*
+   - *Бот для аукционного дома.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot.git
@@ -432,7 +432,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 -->
 
 3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area)
-	 *Пропускаем стартовую зону Рыцарей смерти.*
+   - *Мод для пропуск стартовой зоны Рыцарей смерти.*
 	 
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-skip-dk-starting-area.git
@@ -448,7 +448,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    >```
 
 4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)
-   *Позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
+   - *Мод позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
 
 	 ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
@@ -460,7 +460,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)
-   *Корректирует статы игроков в подземельях в зависимости от количества игроков в группе*
+   - *Мод увеличивает статы игроков в подземелье в зависимости от количества игроков в группе*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
@@ -472,8 +472,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)
-
-   *Этот модуль добавляет банкира реагентов, аналогичного более поздним расширениям WoW. Этот банкир может освободить место в сумке, храня реагенты для крафта для игроков. Версия для всех персонажей на аккаунте.*
+   - *Мод добавляет банкира реагентов который освобождает место в сумках игрока, храня реагенты для крафта у себя. Версия общего банка реагентов для всех персонажей на акаунте.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/biosfree/mod-reagent-bank-account.git
@@ -493,7 +492,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 <!--
 7. [mod-racial-trait-swap.git:](https://github.com/biosfree/mod-racial-trait-swap)
-   *Racial-Trait NPC, that allows you, for a ingame cost of gold (configurable), to trade out your racial traits for another.*
+   - *Добавляет racial-trait NPC, позволяющий за внутриигровую стоимость золота (настраиваемую) обменять свои расовые черты на другие.*
    
    ```bash
    git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
@@ -513,7 +512,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 -->
 
 7. [mod-gain-honor-guard:](https://github.com/azerothcore/mod-gain-honor-guard)
-   *Этот модуль дает игрокам возможность фармить стражников и/или элиту для получения чести.*
+   - *Этот модуль дает игрокам возможность фармить стражников и/или элиту для получения чести.*
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-gain-honor-guard.git
@@ -525,7 +524,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    ```
 
 8. [mod-transmog:](https://github.com/azerothcore/mod-transmog)
-   *Это модуль добавляет в игру возможность трансмогрификации на основе кода: [Rochet2 Transmog Script](http://rochet2.github.io/Transmogrification.html)*
+   - *Это модуль добавляет в игру возможность трансмогрификации на основе кода: [Rochet2 Transmog Script](http://rochet2.github.io/Transmogrification.html)*
       
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-transmog.git
