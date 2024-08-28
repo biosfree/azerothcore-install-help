@@ -58,17 +58,21 @@ sudo apt install mysql-server
 >При установке MySQL, новая учетная запись `root` уже защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставить поле с паролем для root пустым!
 
 >[!TIP]
->*Или воспользутесь вариантом установки из официальной [инструкции](https://dev.mysql.com/doc/refman/8.4/en/linux-installation-apt-repo.html)*:
+>*Или воспользутесь Неинтерактивным вариантом установка последней версии `mysql-lts` (8.4) без вывода каких-либо пользовательских запросов.*:
 >
 >```bash
 >sudo apt-get update
 >sudo apt-get install gnupg -y
->sudo dpkg -i /tmp/mysql-apt-config_0.8.32-1_all.deb
+>sudo DEBIAN_FRONTEND="noninteractive" dpkg -i /tmp/mysql-apt-config_0.8.32-1_all.deb
 >sudo apt-get update
->sudo dpkg-reconfigure mysql-apt-config
->sudo apt-get update
->sudo apt-get install mysql-server
+>sudo DEBIAN_FRONTEND="noninteractive" apt-get install -y mysql-server
 >```
+>>
+>>```bash
+>>sudo dpkg-reconfigure mysql-apt-config
+>>sudo apt-get update
+>>sudo apt-get install mysql-server
+>>```
 
 ### Установка основных программ и библиотек [:point_left:](#подготовка-os-debian-12-point_up_2)
 
