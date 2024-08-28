@@ -449,7 +449,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)
    - *Мод позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
-
+   
 	 ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
    ```
