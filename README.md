@@ -6,8 +6,8 @@ goal : Установка Azerothcore в Debian
      : Debian v12.6 под пользователем acore
      : MySQL v8.4.2 LTS под пользователем acore
 autor: biosfree
-ver. : 0.9
-date : 2024-08-21 17:00
+ver. : 0.91
+date : 2024-08-28 17:00
 -->
 
 # Установка ![logo](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Azerothcore 2024 [:rocket:](https://biosfree.github.io/azerothcore-install-help)
@@ -416,19 +416,6 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
 
-<!--
-2. [mod-ah-bot:](https://github.com/azerothcore/mod-ah-bot) - *Бот для аукционного дома.*
-   
-   ```bash
-   git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-ah-bot.git
-   ```
-   
-   ```bash
-   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-   make -C $HOME/azerothcore/build/ -j $(nproc) install
-   ```
--->
-
 3. [mod-skip-dk-starting-area:](https://github.com/biosfree/mod-skip-dk-starting-area) - *Добовляет возможность пропустить стартовую зону Рыцарей смерти.*
    
    ```bash
@@ -479,26 +466,6 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
    >```lua
    >.npc add 290011
    >```
-
-<!--
-7. [mod-racial-trait-swap.git:](https://github.com/biosfree/mod-racial-trait-swap) - *Добавляет NPC, позволяющего за внутриигровую стоимость золота (настраиваемую) обменять свои расовые черты на другие.*
-   
-	 ```bash
-   git -C ~/azerothcore/modules clone https://github.com/biosfree/mod-racial-trait-swap.git
-   ```
-   
-   ```bash
-   cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
-   make -C $HOME/azerothcore/build/ -j $(nproc) install
-   ```
-   
-   *Чтобы добавить racial-trait-swap NPC:*
-   >С учетной записью GM зайдите в локацию, куда вы хотите добавить npc, и используйте эту команду:
-   >
-   >```lua
-   >.npc add 98888
-   >```
--->
 
 7. [mod-gain-honor-guard:](https://github.com/azerothcore/mod-gain-honor-guard) - *Дает игрокам возможность фармить стражников и/или элиту для получения чести.*
    
