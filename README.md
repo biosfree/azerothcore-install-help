@@ -395,7 +395,7 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 ### Установка допольнительных модулей [:point_left:](#установка-дополнений-для-azerothcore-point_up_2)
 
 1. [mod-eluna:](https://github.com/azerothcore/mod-eluna)
-   *Eluna Lua Engine © - это движок lua, встроенный в World of Warcraft.* [Eluna API](https://www.azerothcore.org/pages/eluna/index.html) | [Lua Руководсво](http://www.lua.org/manual/5.2/).
+   *Eluna Lua Engine © - это движок lua, встроенный в World of Warcraft.* [Eluna API](https://www.azerothcore.org/pages/eluna/index.html) | [Lua руководство](http://www.lua.org/manual/5.2/).
    
    ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-eluna.git
