@@ -449,29 +449,29 @@ sudo mysql acore_auth -e "DELETE FROM motd WHERE realmid=1; INSERT INTO motd (re
 
 4. [mod-solo-lfg:](https://github.com/azerothcore/mod-solo-lfg)
    - *Мод позволяет игрокам использовать систему поиска подземелий в одиночку или в группах менее 5 игроков.*
-   
-	 ```bash
+
+   ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solo-lfg.git
    ```
-   
+
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
 
-5. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)
+6. [mod-solocraft:](https://github.com/azerothcore/mod-solocraft)
    - *Мод увеличивает статы игроков в подземелье в зависимости от количества игроков в группе*
-   
-   ```bash
+
+	 ```bash
    git -C $HOME/azerothcore/modules clone https://github.com/azerothcore/mod-solocraft.git
    ```
-   
+
    ```bash
    cmake -B $HOME/azerothcore/build/ -S $HOME/azerothcore/
    make -C $HOME/azerothcore/build/ -j $(nproc) install
    ```
 
-6. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)
+8. [mod-reagent-bank-account:](https://github.com/biosfree/mod-reagent-bank-account)
    - *Мод добавляет банкира реагентов который освобождает место в сумках игрока, храня реагенты для крафта у себя. Версия общего банка реагентов для всех персонажей на акаунте.*
    
    ```bash
