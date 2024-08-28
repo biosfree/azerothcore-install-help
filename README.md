@@ -101,7 +101,7 @@ sudo apt update && sudo apt install git cmake make gcc g++ clang default-libmysq
 Загрузите исходники c [официального репозитория](https://github.com/azerothcore/azerothcore-wotlk)
 
 ```bash
-git -C ~ clone https://github.com/azerothcore/azerothcore-wotlk.git --branch master --single-branch azerothcore --depth 1
+git -C ~ clone https://github.com/azerothcore/azerothcore-wotlk.git azerothcore --depth 1
 ```
 
 ### Настройка и исправления для acore.sh [:point_left:](#подготовка-azerothcore-point_up_2)
