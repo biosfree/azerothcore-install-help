@@ -43,34 +43,27 @@ date : 2024-08-28 17:00
 wget -P /tmp https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
 ```
 
-Установите загруженный dep-пакет:
+*Установка последней версии `mysql-lts` (8.4) без вывода каких-либо пользовательских запросов:*
 
 ```bash
 sudo apt update
-sudo apt install /tmp/mysql-apt-config_0.8.32-1_all.deb
+sudo DEBIAN_FRONTEND="noninteractive" apt install /tmp/mysql-apt-config_0.8.32-1_all.deb -y
 sudo apt update
-sudo apt install mysql-server
+sudo DEBIAN_FRONTEND="noninteractive" apt install mysql-server -y
 ```
 
 >[!NOTE]
->При установке MySQL, новая учетная запись `root` уже защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставить поле с паролем для root пустым!
+>При установке MySQL, новая учетная запись `root` будет защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставить поле с паролем для root пустым!
 
 >[!TIP]
->*Или воспользутесь неинтерактивным вариантом установка последней версии `mysql-lts` (8.4) без вывода каких-либо пользовательских запросов.*:
+>*Или воспользуйтесь интерактивным вариантом установки:*
 >
 >```bash
->sudo apt-get update
->sudo apt-get install gnupg -y
->sudo DEBIAN_FRONTEND="noninteractive" dpkg -i /tmp/mysql-apt-config_0.8.32-1_all.deb
->sudo apt-get update
->sudo DEBIAN_FRONTEND="noninteractive" apt-get install -y mysql-server
+>sudo apt update
+>sudo apt install /tmp/mysql-apt-config_0.8.32-1_all.deb
+>sudo apt update
+>sudo apt install mysql-server
 >```
->>
->>```bash
->>sudo dpkg-reconfigure mysql-apt-config
->>sudo apt-get update
->>sudo apt-get install mysql-server
->>```
 
 ### Установка основных программ и библиотек [:point_left:](#подготовка-os-debian-12-point_up_2)
 
