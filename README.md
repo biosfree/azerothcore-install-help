@@ -243,7 +243,7 @@ for i in $( ls ~/.local/etc/*.dist ); do cp -n $i ${i%.*}; done
 ```
 
 ```bash
-sed -i 's|^DataDir = .*|DataDir = "/mnt/wowclient/wotlk"|' ~/.local/etc/worldserver.conf
+sed -i 's|^DataDir = .*|DataDir = "'${HOME}'/wowclient/wotlk"|' ~/.local/etc/worldserver.conf
 sed -i 's|^RealmZone = .*|RealmZone = 12|' ~/.local/etc/worldserver.conf
 sed -i 's|^DBC.Locale = .*|DBC.Locale = 8|' ~/.local/etc/worldserver.conf
 sed -i 's|^LogsDir = .*|LogsDir = "'${HOME}'/logs"|' ~/.local/etc/*.conf
