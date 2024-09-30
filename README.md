@@ -75,7 +75,7 @@ sudo apt install mysql-server
 ### Установка основных программ и библиотек [:point_left:](#подготовка-os-debian-12-point_up_2)
 
 ```bash
-sudo apt update && sudo apt install git cmake make gcc g++ clang default-libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev lsb-release -y
+sudo apt update && sudo apt install git cmake make gcc g++ clang libmysqlclient-dev libssl-dev libbz2-dev libreadline-dev libncurses-dev libboost-all-dev lsb-release -y
 ```
 
 >[!TIP]
