@@ -1,0 +1,1 @@
+INSERT IGNORE INTO `creature_text_locale` (`CreatureID`, `GroupID`, `ID`, `Locale`, `Text`) VALUES (2501, 1, 0, 'ruRU', 'Ба! $N, не могу её открыть!');
