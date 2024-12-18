@@ -1,4 +1,4 @@
-DELETE FROM `playercreateinfo_item` WHERE `itemid`=14646 OR `itemid`=14649 OR `itemid`=14647 OR `itemid`=14648 OR `itemid`=14651 OR `itemid`=14650 OR `itemid`=20938 OR `itemid`=22888 OR `itemid`=39713;
+DELETE FROM `playercreateinfo_item` WHERE `itemid` IN (14646, 14649, 14647, 14648, 14651, 14650, 20938, 22888, 39713);
 INSERT INTO `playercreateinfo_item` (`race`, `class`, `itemid`, `amount`, `Note`) VALUES (0, 6, 39713, 1, 'Ebon Hold Gift Voucher');
 INSERT INTO `playercreateinfo_item` (`race`, `class`, `itemid`, `amount`, `Note`) VALUES
 	(1, 1, 14646, 1, 'Goldshire Gift Voucher'),
