@@ -1,5 +1,6 @@
 DELETE FROM `playercreateinfo_item` WHERE `itemid` IN (14646, 14649, 14647, 14648, 14651, 14650, 20938, 22888, 39713);
-INSERT INTO `playercreateinfo_item` (`race`, `class`, `itemid`, `amount`, `Note`) VALUES (0, 6, 39713, 1, 'Ebon Hold Gift Voucher');
+INSERT INTO `playercreateinfo_item` (`race`, `class`, `itemid`, `amount`, `Note`) VALUES
+    (0, 6, 39713, 1, 'Ebon Hold Gift Voucher');
 INSERT INTO `playercreateinfo_item` (`race`, `class`, `itemid`, `amount`, `Note`) VALUES
 	(1, 1, 14646, 1, 'Goldshire Gift Voucher'),
 	(1, 2, 14646, 1, 'Goldshire Gift Voucher'),
