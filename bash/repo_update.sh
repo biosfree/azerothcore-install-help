@@ -66,7 +66,6 @@ get_version() {
     version=$(dpkg -s "$dep" 2>/dev/null | grep -i '^Version:' | awk '{print $2}' | sed -E 's/^[0-9]+://; s/[^0-9.].*$//')
 
     if [[ -n "$version" ]]; then
-        #echo "$version"
         echo "$version"
     else
         echo ""
@@ -305,7 +304,7 @@ for module in "$MODULES_DIR"/*; do
         fi
     fi
 done
-print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
+print_msg 4 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
 # Запуск сборки при наличии обновлений
 if $core_updated || $modules_updated; then
@@ -326,7 +325,7 @@ if $core_updated || $modules_updated; then
     show_progress $cmake_pid "Конфигурация сборки" "$CMAKE_LOG"
     wait $cmake_pid
     check_error "CMake"
-    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
+    print_msg 4 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Анализ логов CMake
     grep --color=auto -iE 'error|warning' "$CMAKE_LOG" | \
@@ -347,7 +346,7 @@ if $core_updated || $modules_updated; then
     show_progress $make_pid "Компиляция исходного кода" "$BUILD_OUTPUT_LOG"
     wait $make_pid
     check_error "Сборка"
-    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
+    print_msg 4 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Установка
     start_time=$(date +%s)
@@ -357,7 +356,7 @@ if $core_updated || $modules_updated; then
     show_progress $install_pid "Установка собранных файлов" "$BUILD_OUTPUT_LOG"
     wait $install_pid
     check_error "Установка"
-    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
+    print_msg 4 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Проверка результатов
     print_msg 6 "Проверка результатов сборки:"
