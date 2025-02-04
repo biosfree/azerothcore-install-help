@@ -10,8 +10,8 @@ BUILD_DIR="$CORE_DIR/build"             # путь сборки Azerothcore
 LOG_DIR="$INSTALL_DIR/logs"             # путь логов этого скрипта
 
 # Стандартные настройки сборки CMake
-C_COMPILER="/usr/bin/clang"             # используемый компилятор С
-CXX_COMPILER="/usr/bin/clang++"         # используемый компилятор С++
+C_COMPILER=$(which clang || echo "/usr/bin/clang")          # используемый компилятор С
+CXX_COMPILER=$(which clang++ || echo "/usr/bin/clang++")    # используемый компилятор С++
 WITH_WARNINGS=1                         # показать все ошибки
 TOOLS_BUILD="all"                       # компилировать дополнительные утилиты
 SCRIPTS="static"                        # статичные скрипты
@@ -121,6 +121,11 @@ log_with_timestamp() {
 # Функция для форматирования времени
 format_duration() {
     local duration=$1
+    # Округляем до ближайшей секунды
+    if [ $duration -lt 1 ]; then
+        duration=1
+    fi
+
     local hours=$(( duration / 3600 ))
     local remaining=$(( duration % 3600 ))
     local minutes=$(( remaining / 60 ))
@@ -286,7 +291,7 @@ if check_updates "$CORE_DIR" "AzerothCore"; then
     core_updated=true
     manage_server_stop  # Остановка сервера
     print_msg 4 "Применяем обновления ядра..."
-    git -C "$CORE_DIR" pull origin master >/dev/null 2>&1
+    git -C "$CORE_DIR" pull origin $(git rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
     check_error "git pull для AzerothCore"
 fi
 
@@ -299,7 +304,7 @@ for module in "$MODULES_DIR"/*; do
         if check_updates "$module" "$module_name"; then
             modules_updated=true
             print_msg 4 "Применяем обновления модуля $module_name..."
-            git -C "$module" pull origin master >/dev/null 2>&1
+            git -C "$module" pull origin $(git rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
             check_error "git pull для $module_name"
         fi
     fi
@@ -341,7 +346,7 @@ if $core_updated || $modules_updated; then
     # Компиляция
     start_time=$(date +%s)
     print_msg 6 "Компиляция исходного кода..."
-    make -j$(($(nproc)-1)) > >(while IFS= read -r line; do log_with_timestamp "$BUILD_OUTPUT_LOG" "$line"; done) 2> >(while IFS= read -r line; do log_with_timestamp "$BUILD_ERRORS_LOG" "$line"; done) &
+    make -j$(nproc --ignore=1) > >(while IFS= read -r line; do log_with_timestamp "$BUILD_OUTPUT_LOG" "$line"; done) 2> >(while IFS= read -r line; do log_with_timestamp "$BUILD_ERRORS_LOG" "$line"; done) &
     make_pid=$!
     show_progress $make_pid "Компиляция исходного кода" "$BUILD_OUTPUT_LOG"
     wait $make_pid
