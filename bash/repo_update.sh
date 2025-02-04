@@ -291,7 +291,7 @@ if check_updates "$CORE_DIR" "AzerothCore"; then
     core_updated=true
     manage_server_stop  # Остановка сервера
     print_msg 4 "Применяем обновления ядра..."
-    git -C "$CORE_DIR" pull origin $(git rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
+    git -C "$CORE_DIR" pull origin $(git -C "$CORE_DIR" rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
     check_error "git pull для AzerothCore"
 fi
 
@@ -304,7 +304,7 @@ for module in "$MODULES_DIR"/*; do
         if check_updates "$module" "$module_name"; then
             modules_updated=true
             print_msg 4 "Применяем обновления модуля $module_name..."
-            git -C "$module" pull origin $(git rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
+            git -C "$module" pull origin $(git -C "$module" rev-parse --abbrev-ref HEAD) >/dev/null 2>&1
             check_error "git pull для $module_name"
         fi
     fi
