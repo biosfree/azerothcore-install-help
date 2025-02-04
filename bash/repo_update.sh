@@ -142,7 +142,7 @@ format_duration() {
     fi
 
     # Добавляем секунды, если они есть или если время меньше минуты
-    if { [ $seconds -gt 0 ] || [ -z "$time_str" ]; }; then
+    if { [ $seconds -gt 0 ] || [ $duration -eq 0 ] || [ -z "$time_str" ]; }; then
         # Добавляем пробел, если уже есть другие компоненты
         [ -n "$time_str" ] && time_str+=" "
         time_str+="${seconds} сек."
@@ -292,6 +292,7 @@ if check_updates "$CORE_DIR" "AzerothCore"; then
 fi
 
 # Проверка обновлений модулей
+start_time=$(date +%s)
 print_msg 6 "Проверка обновлений модулей..."
 for module in "$MODULES_DIR"/*; do
     if [ -d "$module/.git" ]; then
@@ -304,6 +305,7 @@ for module in "$MODULES_DIR"/*; do
         fi
     fi
 done
+print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
 # Запуск сборки при наличии обновлений
 if $core_updated || $modules_updated; then
@@ -324,8 +326,7 @@ if $core_updated || $modules_updated; then
     show_progress $cmake_pid "Конфигурация сборки" "$CMAKE_LOG"
     wait $cmake_pid
     check_error "CMake"
-    duration=$(( $(date +%s) - start_time ))
-    print_msg 6 "Этап завершен за ${formatted_time}"
+    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Анализ логов CMake
     grep --color=auto -iE 'error|warning' "$CMAKE_LOG" | \
@@ -346,8 +347,7 @@ if $core_updated || $modules_updated; then
     show_progress $make_pid "Компиляция исходного кода" "$BUILD_OUTPUT_LOG"
     wait $make_pid
     check_error "Сборка"
-    duration=$(( $(date +%s) - start_time ))
-    print_msg 6 "Этап завершен за ${formatted_time}"
+    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Установка
     start_time=$(date +%s)
@@ -357,8 +357,7 @@ if $core_updated || $modules_updated; then
     show_progress $install_pid "Установка собранных файлов" "$BUILD_OUTPUT_LOG"
     wait $install_pid
     check_error "Установка"
-    duration=$(( $(date +%s) - start_time ))
-    print_msg 6 "Этап завершен за ${formatted_time}"
+    print_msg 6 "Этап завершен за $(format_duration "$(( $(date +%s) - start_time ))")"
 
     # Проверка результатов
     print_msg 6 "Проверка результатов сборки:"
