@@ -1,5 +1,12 @@
 #!/bin/bash
 
+VER="0.23 (23)"
+DAT="2025-02-05"
+FOR="Debian 12"
+AUT="biteos"
+
+INSTALL_UPDATED=true                    # компилировать исходники только если есть обновления (false - в любом случае)
+
 # Настройки основных путей
 CORE_DIR="$HOME/azerothcore"            # путь репозитория Azerothcore
 INSTALL_DIR="$CORE_DIR/env/dist"        # путь установки сервера Azerothcore
@@ -12,10 +19,11 @@ LOG_DIR="$INSTALL_DIR/logs"             # путь логов этого скр�
 # Стандартные настройки сборки CMake
 C_COMPILER=$(which clang || echo "/usr/bin/clang")          # используемый компилятор С
 CXX_COMPILER=$(which clang++ || echo "/usr/bin/clang++")    # используемый компилятор С++
-WITH_WARNINGS=1                         # показать все ошибки
-TOOLS_BUILD="all"                       # компилировать дополнительные утилиты
-SCRIPTS="static"                        # статичные скрипты
-CMAKE_FLAGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_C_COMPILER=$C_COMPILER -DCMAKE_CXX_COMPILER=$CXX_COMPILER -DWITH_WARNINGS=$WITH_WARNINGS -DTOOLS_BUILD=$TOOLS_BUILD -DSCRIPTS=$SCRIPTS"
+WITH_WARNINGS=0                         # 1- показать все предупреждения, 0 - только ошибки компиляции.
+TOOLS_BUILD="all"                       # компилировать дополнительные утилиты (none, all, db-only, maps-only).
+SCRIPTS="dynamic"                       # настройка скриптов (none, static, dynamic, minimal-static, minimal-dynamic).
+MODULES="dynamic"                       # настройка модули (none, static, dynamic).
+CMAKE_FLAGS="-DCMAKE_INSTALL_PREFIX=$INSTALL_DIR -DCMAKE_C_COMPILER=$C_COMPILER -DCMAKE_CXX_COMPILER=$CXX_COMPILER -DWITH_WARNINGS=$WITH_WARNINGS -DTOOLS_BUILD=$TOOLS_BUILD -DSCRIPTS=$SCRIPTS -DMODULES=$MODULES"
 
 # Настройки остановки сервера запущенного через сервисы или вручную
 ALLOW_STOP_SERVER="true"                # Разрешить остановку сервера перед обновлением
@@ -39,6 +47,12 @@ DEPENDENCIES_LIST=(                     # Список зависимостей
     libmysqlclient-dev
 )
 
+# Инициализация логов
+mkdir -p "$LOG_DIR"
+CMAKE_LOG="$LOG_DIR/build_cmake.log"
+BUILD_OUTPUT_LOG="$LOG_DIR/build_output.log"
+BUILD_ERRORS_LOG="$LOG_DIR/build_errors.log"
+
 # Цвета для вывода
 CLR=(
     "\033[0m"    # 0 - сброс
@@ -51,11 +65,89 @@ CLR=(
     "\033[0K"    # 7 - сброс конца строки
 )
 
-# Инициализация логов
-mkdir -p "$LOG_DIR"
-CMAKE_LOG="$LOG_DIR/cmake.log"
-BUILD_OUTPUT_LOG="$LOG_DIR/build_output.log"
-BUILD_ERRORS_LOG="$LOG_DIR/build_errors.log"
+# Функция передачи параметров при запуске
+handle_arguments() {
+    local exit_after_processing=false
+
+    while [[ "$#" -gt 0 ]]; do
+        case $1 in
+            -i|--install)
+                INSTALL_UPDATED=false
+                print_msg 4 "Используется настройка: Переустановить сборку даже если нет обновлений!"
+                shift
+            ;;
+            -c|--clear)
+                print_msg 4 "Очистка настроек от прошлой сборки..."
+                if [ -d "$BUILD_DIR" ]; then
+                    find "$BUILD_DIR" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+                    print_msg 2 "Директория сборки успешно очищена"
+                else
+                    print_msg 3 "Директория сборки $BUILD_DIR не существует"
+                fi
+                exit_after_processing=true
+                shift
+            ;;
+            -mi|--mod-install)
+                if [ -z "$2" ]; then
+                    print_msg 1 "Ошибка: укажите название модуля для установки!"
+                    exit 1
+                fi
+                print_msg 4 "Установка модуля $2..."
+                if git -C "$MODULES_DIR" clone "https://github.com/azerothcore/$2.git"; then
+                    print_msg 2 "Модуль $2 успешно установлен"
+                else
+                    print_msg 1 "Ошибка при установке модуля $2!"
+                    exit 1
+                fi
+                shift 2
+            ;;
+            -md|--mod-del)
+                if [ -z "$2" ]; then
+                    print_msg 1 "Ошибка: укажите название модуля для удаления!"
+                    exit 1
+                fi
+                print_msg 4 "Удаление модуля $2..."
+                if [ -d "${MODULES_DIR:?}/$2" ]; then
+                    rm -rf "${MODULES_DIR:?}/$2"
+                    print_msg 2 "Модуль $2 успешно удален"
+                else
+                    print_msg 3 "Модуль $2 не найден"
+                fi
+                exit_after_processing=true
+                shift 2
+            ;;
+            -v|--version)
+                print_msg 6 "Версия: $VER [$DAT]"
+                print_msg 6 "Для системы: $FOR"
+                print_msg 6 "Автор: $AUT"
+                exit_after_processing=true
+                shift
+            ;;
+            -h|--help)
+                print_msg 6 "Использование: $0 [OPTIONS]"
+                print_msg 3 "Опции:"
+                print_msg 5 "  -i, --install        Принудительная переустановка"
+                print_msg 5 "  -c, --clear          Очистка папки сборки"
+                print_msg 5 "  -mi, --mod-install   Установить модуль"
+                print_msg 5 "  -md, --mod-del       Удалить модуль"
+                print_msg 5 "  -v, --version        Показать версию"
+                print_msg 5 "  -h, --help           Показать помощь"
+                exit_after_processing=true
+                shift
+            ;;
+            *)
+                print_msg 1 "Неизвестный параметр: $1"
+                print_msg 3 "Используйте ${CLR[2]}--help${CLR[0]} для просмотра доступных опций"
+                exit 1
+            ;;
+        esac
+    done
+
+    # Выход после обработки обслуживающих параметров
+    if $exit_after_processing; then
+        exit 0
+    fi
+}
 
 # Функция для получения версии через dpkg
 get_version() {
@@ -125,33 +217,27 @@ format_duration() {
     if [ $duration -lt 1 ]; then
         duration=1
     fi
-
     local hours=$(( duration / 3600 ))
     local remaining=$(( duration % 3600 ))
     local minutes=$(( remaining / 60 ))
     local seconds=$(( remaining % 60 ))
-
     local time_str=""
-
     # Добавляем часы, если они есть
     if [ $hours -gt 0 ]; then
         time_str+="${hours} ч."
     fi
-
     # Добавляем минуты, если они есть
     if [ $minutes -gt 0 ]; then
         # Добавляем пробел, если уже есть часы
         [ -n "$time_str" ] && time_str+=" "
         time_str+="${minutes} мин."
     fi
-
     # Добавляем секунды, если они есть или если время меньше минуты
     if { [ $seconds -gt 0 ] || [ $duration -eq 0 ] || [ -z "$time_str" ]; }; then
         # Добавляем пробел, если уже есть другие компоненты
         [ -n "$time_str" ] && time_str+=" "
         time_str+="${seconds} сек."
     fi
-
     echo "$time_str"
 }
 
@@ -162,7 +248,7 @@ print_msg() {
     [ -n "$message" ] && echo -e "${CLR[color]}>>> $message${CLR[0]}"
 }
 
-# Проверка ошибок
+# Функция проверки ошибок сборки из логов
 check_error() {
     if [ $? -ne 0 ]; then
         print_msg 1 "Ошибка при выполнении: $1"
@@ -197,17 +283,17 @@ stop_service() {
 stop_process() {
     local process_name="$1"
     local pids=$(pgrep -f "$process_name")
-    
+
     if [ -n "$pids" ]; then
         print_msg 5 "Остановка процесса ${process_name}..."
         kill -TERM $pids 2>/dev/null
-        
+
         local counter=0
         while kill -0 $pids 2>/dev/null && [ $counter -lt $PROCESS_GRACE_TIMEOUT ]; do
             sleep 1
             ((counter++))
         done
-        
+
         if kill -0 $pids 2>/dev/null; then
             print_msg 3 "Принудительная остановка процесса ${process_name}..."
             kill -KILL $pids 2>/dev/null
@@ -242,12 +328,11 @@ show_progress() {
     local log_file="$3"
     local delay=0.5
     local spin=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
-    
+
     while kill -0 $pid 2>/dev/null; do
         # Получаем последний процент из лога
         local last_line=$(tail -n 1 "$log_file" 2>/dev/null)
         local percent=$(echo "$last_line" | grep -oE '[0-9]{1,3}%')
-        
         # Обновляем прогресс, если найден процент
         if [ -n "$percent" ]; then
             echo -ne "\r${CLR[5]}>>> $msg: ${CLR[3]}$percent${CLR[0]} "
@@ -267,10 +352,8 @@ show_progress() {
 check_updates() {
     local repo_dir=$1
     local repo_name=$2
-    
     git -C "$repo_dir" fetch origin --quiet
     check_error "git fetch в $repo_name"
-    
     local count=$(git -C "$repo_dir" rev-list @..@{u} --count)
     if [ "$count" -gt 0 ]; then
         print_msg 3 "Обнаружены обновления в $repo_name: $count"
@@ -281,9 +364,15 @@ check_updates() {
 }
 
 # Основной процесс
+handle_arguments "$@"
 check_dependencies
-core_updated=false
-modules_updated=false
+if [[ "$INSTALL_UPDATED" = "true" ]]; then
+    core_updated=false
+    modules_updated=false
+else
+    core_updated=true
+    modules_updated=true
+fi
 
 # Проверка обновлений ядра
 print_msg 6 "Проверка обновлений AzerothCore..."
