@@ -39,20 +39,20 @@ date : 2025-02-20 15:00
 ### Установка MySQL [:point_left:](#подготовка-os-debian-12-point_up_2)
 
 Перейдите на сайт официального репозитория MySQL: [MySQL APT Repository](https://dev.mysql.com/downloads/repo/apt/).
-Проверти текущий номер версии `mysql-apt-config_x.x.xx-x_all.deb`.
-Запишите его в переменную, действующую в текущем сеансе пользователя.
+*Проверти текущий номер версии `mysql-apt-config_x.x.xx-x_all.deb`.*
+*Запишите его в переменную, действующую в текущем сеансе пользователя.*
 ```bash
 v="0.8.33-1"
 ```
 >[!IMPORTANT]
 >:exclamation: Далее в инструкции будут команды, которые смогут использовать эту переменную пока будет активен текущей сеанс пользователя.
 
-Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
+**Установите последнюй версию `mysql-server-lts` (На данный момент v8.4) без вывода каких-либо пользовательских запросов:**
+
+##### Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
 ```bash
 wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${v}_all.deb"
 ```
-**Установите последнюй версию `mysql-server-lts` (На данный момент v8.4) без вывода каких-либо пользовательских запросов:**
-
 ##### Установите конфигуратора репозитория `MySQL APT`
 
 ```bash
@@ -77,8 +77,8 @@ sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install mysql-server libmysqlclie
 ```
 
 >[!TIP]
->#### Или воспользуйтесь интерактивным вариантом установки:
->Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL
+>Или воспользуйтесь интерактивным вариантом установки.
+>Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root`.
 >```bash
 >sudo apt install /tmp/mysql-apt-config_${v}_all.deb
 >sudo apt update
