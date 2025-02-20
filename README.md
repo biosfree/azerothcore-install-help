@@ -1,17 +1,17 @@
 <!--
 goal : Установка Azerothcore в Debian
      : используя ruRU локали
-     : Debian v12.6 под пользователем acore
-     : MySQL v8.4.2 LTS под пользователем acore
+     : Debian v12.9 под пользователем acore
+     : MySQL v8.4 LTS под пользователем acore
 autor: biosfree
-ver. : 0.91
-date : 2024-08-28 17:00
+ver. : 0.92
+date : 2025-02-20 15:00
 -->
 
 # Установка ![logo](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) Azerothcore 2024 [:rocket:](https://biosfree.github.io/azerothcore-install-help)
 
 1. [Подготовка OS Debian 12](#подготовка-os-debian-12-point_up_2)
-	* [Установка MySQL 8.4](#установка-mysql-84-point_left)
+	* [Установка MySQL](#установка-mysql-point_left)
 	* [Установка основных программ и библиотек](#установка-основных-программ-и-библиотек-point_left)
 
 2. [Подготовка AzerothCore](#подготовка-azerothcore-point_up_2)
@@ -36,33 +36,61 @@ date : 2024-08-28 17:00
 
 ## Подготовка OS Debian 12 [:point_up_2:](#установка--azerothcore-2024-rocket)
 
-### Установка MySQL 8.4 [:point_left:](#подготовка-os-debian-12-point_up_2)
+### Установка MySQL [:point_left:](#подготовка-os-debian-12-point_up_2)
 
-Загрузите последний `*.deb` c официального [MySQL APT Repository](https://dev.mysql.com/downloads/repo/apt/) в `/tmp`
+Перейдите на сайт официального репозитория [MySQL APT Repository](https://dev.mysql.com/downloads/repo/apt/)
+и проверите текущий номер версии mysql-apt-config. Запишите его в переименую действующую в текущем сеансе пользователя
 ```bash
-wget -P /tmp https://dev.mysql.com/get/mysql-apt-config_0.8.32-1_all.deb
+v="0.8.33-1"
+```
+>[!IMPORTANT]
+>:exclamation: Далее в инструкции будут команды с ${v} которые будут использовать эту переименую пока активен текущей сеанс пользователя.
+
+Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
+```bash
+wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${v}_all.deb"
+```
+**Установите последнюй версию `mysql-server-lts` (На данный момент v8.4) без вывода каких-либо пользовательских запросов:**
+
+##### Установите конфигуратора репозитория `MySQL APT`
+
+```bash
+sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${v}_all.deb"
+```
+>Или через `dpkg -i` согласно инструкции MySQL:
+>```bash
+>sudo apt-get install gnupg -yqq
+>sudo DEBIAN_FRONTEND=noninteractive dpkg -i "/tmp/mysql-apt-config_${v}_all.deb"
+>```
+
+Если передумали использовать настроки установку по-умолчанию то на этом моменте их можно поменять.
+Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL:
+```bash
+sudo dpkg-reconfigure mysql-apt-config
 ```
 
-*Установка последней версии `mysql-lts` (8.4) без вывода каких-либо пользовательских запросов:*
-
+##### Установите непосредственно `Сервер MySQL` и `библиотеки`:
 ```bash
-sudo apt update
-sudo DEBIAN_FRONTEND="noninteractive" apt install /tmp/mysql-apt-config_0.8.32-1_all.deb -y
-sudo apt update
-sudo DEBIAN_FRONTEND="noninteractive" apt install mysql-server -y
+sudo apt -qq update
+sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install mysql-server libmysqlclient-dev
 ```
-
->[!NOTE]
->При установке MySQL, новая учетная запись `root` будет защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставить поле с паролем для root пустым!
 
 >[!TIP]
->*Или воспользуйтесь интерактивным вариантом установки:*
->
+>#### Или воспользуйтесь интерактивным вариантом установки:
+>Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL
 >```bash
+>sudo apt install /tmp/mysql-apt-config_${v}_all.deb
 >sudo apt update
->sudo apt install /tmp/mysql-apt-config_0.8.32-1_all.deb
->sudo apt update
->sudo apt install mysql-server
+>sudo apt install mysql-server libmysqlclient-dev
+>```
+
+>[!NOTE]
+>При установке MySQL, новая учетная запись `root` будет защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставлять поле с паролем для root пустым!
+
+>[!NOTE]
+>Убедитесь что после установки служба MySQL успешно запущена
+>```bash
+>systemctl status mysql
 >```
 
 ### Установка основных программ и библиотек [:point_left:](#подготовка-os-debian-12-point_up_2)
