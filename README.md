@@ -39,7 +39,7 @@ date : 2025-02-20 15:00
 ### Установка MySQL [:point_left:](#подготовка-os-debian-12-point_up_2)
 
 Перейдите на сайт официального репозитория MySQL: [MySQL APT Repository](https://dev.mysql.com/downloads/repo/apt/).
-Проверите текущий номер версии `mysql-apt-config_x.x.xx-x_all.deb`.
+Проверти текущий номер версии `mysql-apt-config_x.x.xx-x_all.deb`.
 Запишите его в переменную, действующую в текущем сеансе пользователя.
 ```bash
 v="0.8.33-1"
