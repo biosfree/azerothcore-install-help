@@ -54,7 +54,7 @@ v="0.8.33-1"
 wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${v}_all.deb"
 ```
 
-Установите конфигуратора репозитория `MySQL APT`
+Установите конфигуратор репозитория `MySQL APT` для `apt`
 ```bash
 sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${v}_all.deb"
 ```
@@ -64,11 +64,12 @@ sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${
 >sudo DEBIAN_FRONTEND=noninteractive dpkg -i "/tmp/mysql-apt-config_${v}_all.deb"
 >```
 
-Если передумали использовать настроки установку по-умолчанию то на этом моменте их можно поменять.
-Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL:
-```bash
-sudo dpkg-reconfigure mysql-apt-config
-```
+>[!TIP]
+>Если передумали использовать настроки установку по-умолчанию то на этом моменте их можно поменять.
+>Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL:
+>```bash
+>sudo dpkg-reconfigure mysql-apt-config
+>```
 
 Установите непосредственно `Сервер MySQL` и `библиотеки`:
 ```bash
