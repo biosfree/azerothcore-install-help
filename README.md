@@ -47,14 +47,14 @@ v="0.8.33-1"
 >[!IMPORTANT]
 >:exclamation: Далее в инструкции будут команды, которые смогут использовать эту переменную пока будет активен текущей сеанс пользователя.
 
-**Установите последнюй версию `mysql-server-lts` (На данный момент v8.4) без вывода каких-либо пользовательских запросов:**
+**Установите последнюю версию `mysql-server-lts` (На данный момент v8.4) без вывода каких-либо пользовательских запросов:**
 
-##### Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
+Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
 ```bash
 wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${v}_all.deb"
 ```
-##### Установите конфигуратора репозитория `MySQL APT`
 
+Установите конфигуратора репозитория `MySQL APT`
 ```bash
 sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${v}_all.deb"
 ```
@@ -70,7 +70,7 @@ sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${
 sudo dpkg-reconfigure mysql-apt-config
 ```
 
-##### Установите непосредственно `Сервер MySQL` и `библиотеки`:
+Установите непосредственно `Сервер MySQL` и `библиотеки`:
 ```bash
 sudo apt -qq update
 sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install mysql-server libmysqlclient-dev
