@@ -42,7 +42,7 @@ date : 2025-02-20 15:00
 *Проверти текущий номер версии `mysql-apt-config_x.x.xx-x_all.deb`.*
 *Запишите его в переменную, действующую в текущем сеансе пользователя.*
 ```bash
-v="0.8.33-1"
+mysql_apt_config_ver="0.8.33-1"
 ```
 >[!IMPORTANT]
 >:exclamation: Далее в инструкции будут команды, которые смогут использовать эту переменную пока будет активен текущей сеанс пользователя.
@@ -51,43 +51,58 @@ v="0.8.33-1"
 
 Загрузите последний `mysql-apt-config_*_all.deb` c официального репозитория в `/tmp`
 ```bash
-wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${v}_all.deb"
+wget --show-progress -qO "/tmp/mysql-apt-config_all.deb" "https://repo.mysql.com/mysql-apt-config_${mysql_apt_config_ver}_all.deb"
+wget --show-progress -qO "/tmp/mysql-apt-config_all.deb.md5" "https://repo.mysql.com/mysql-apt-config_${mysql_apt_config_ver}_all.deb.md5"
+```
+или
+```bash
+wget --show-progress -qNt5 -P /tmp "https://dev.mysql.com/get/mysql-apt-config_${mysql_apt_config_ver}_all.deb"
 ```
 
-Установите конфигуратор репозитория `MySQL APT` для `apt`
+Установите конфигуратор репозитория `MySQL APT`
 ```bash
-sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install "/tmp/mysql-apt-config_${v}_all.deb"
+sudo DEBIAN_FRONTEND="noninteractive" apt install -yqq "/tmp/mysql-apt-config_${mysql_apt_config_ver}_all.deb"
 ```
 >Или через `dpkg -i` согласно инструкции MySQL:
 >```bash
 >sudo apt-get install gnupg -yqq
->sudo DEBIAN_FRONTEND=noninteractive dpkg -i "/tmp/mysql-apt-config_${v}_all.deb"
+>sudo DEBIAN_FRONTEND=noninteractive dpkg -i "/tmp/mysql-apt-config_${mysql_apt_config_ver}_all.deb"
 >```
 
->[!TIP]
->Если передумали использовать настроки установку по-умолчанию то на этом моменте их можно поменять.
->Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL:
->```bash
->sudo dpkg-reconfigure mysql-apt-config
->```
+Если передумали использовать настройки установку по-умолчанию то на этом моменте их можно поменять.
+Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root` пользователя MySQL:
+```bash
+sudo dpkg-reconfigure mysql-apt-config
+```
 
 Установите непосредственно `Сервер MySQL` и `библиотеки`:
 ```bash
-sudo apt -qq update
-sudo DEBIAN_FRONTEND="noninteractive" apt -yqq install mysql-server libmysqlclient-dev
+sudo apt update -qq && apt list --upgradable -qq
+sudo DEBIAN_FRONTEND="noninteractive" apt install -yqq mysql-server libmysqlclient-dev
 ```
 
 >[!TIP]
 >Или воспользуйтесь интерактивным вариантом установки.
 >Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root`.
 >```bash
->sudo apt install /tmp/mysql-apt-config_${v}_all.deb
+>sudo apt install /tmp/mysql-apt-config_${mysql_apt_config_ver}_all.deb
 >sudo apt update
 >sudo apt install mysql-server libmysqlclient-dev
 >```
 
 >[!NOTE]
 >При установке MySQL, новая учетная запись `root` будет защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставлять поле с паролем для root пустым!
+>
+>[!TIP]
+>*Чтобы изменит у пользователя root` метод аутентификации с auth_socket на `пароль`*:
+>```sql
+>sudo mysql -Bse "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY RANDOM PASSWORD;"
+>```
+>*Чтобы изменит у пользователя root` метод аутентификации с пароля на `auth_socket`*:
+>```sql
+>sudo mysql -p -Bse "ALTER USER 'root'@'localhost' IDENTIFIED WITH auth_socket;"
+>```
+>*Обратите внимание что может быть два запроса пароля, первый от команды sudo (пароль текущего пользователя), второй пароль пользователя root MySQL*
 
 >[!NOTE]
 >Убедитесь что после установки служба MySQL успешно запущена
