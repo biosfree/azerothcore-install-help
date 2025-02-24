@@ -84,7 +84,7 @@ sudo DEBIAN_FRONTEND="noninteractive" apt install -yqq mysql-server libmysqlclie
 >Или воспользуйтесь интерактивным вариантом установки.
 >Например для установки `mysql-server-innovation` (v9.2) или установки своего пароля для `root`.
 >```bash
->sudo apt install /tmp/mysql-apt-config_${mysql_apt_config_ver}_all.deb
+>sudo apt install /tmp/mysql-apt-config_all.deb
 >sudo apt update
 >sudo apt install mysql-server libmysqlclient-dev
 >```
