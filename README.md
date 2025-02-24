@@ -91,7 +91,7 @@ sudo DEBIAN_FRONTEND="noninteractive" apt install -yqq mysql-server libmysqlclie
 
 >[!NOTE]
 >При установке MySQL, новая учетная запись `root` будет защищена аутентификацией через `auth_socket`, поэтому вы можете спокойно оставлять поле с паролем для root пустым!
->
+
 >[!TIP]
 >Чтобы изменит у пользователя `root` метод аутентификации с auth_socket на `пароль`:
 >```sql
